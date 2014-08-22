@@ -1,10 +1,10 @@
 // ==UserScript==
-// @name       Duolingo Time Session UX Userscript
-// @namespace  https://github.com/maxim5
-// @version    0.2
-// @description  enter something useful
-// @match      https://www.duolingo.com/
-// @copyright  2014+
+// @name        Duolingo Time Session UX Userscript
+// @namespace   https://github.com/maxim5
+// @version     0.2
+// @description Stops the time session timer after the answer is done
+// @match       https://www.duolingo.com/*
+// @copyright   2014+
 // ==/UserScript==
 
 var originalTimingModule = duo.TimingModule;
@@ -14,7 +14,7 @@ duo.TimingModule = duo.TimingModule.extend({
         originalTimingModule.prototype.initialize.call(this, options);
       	this.model.bind("continue", this.resume, this);
     },
-    
+
     // A copy that does not call `this.resume();`.
     graded: function() {
         var solution = this.model.getSubmittedSolution(),

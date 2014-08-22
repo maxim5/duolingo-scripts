@@ -1,10 +1,10 @@
 // ==UserScript==
-// @name       Duolingo Long Time Session Userscript
-// @namespace  https://github.com/maxim5
-// @version    0.2
-// @description  enter something useful
-// @match      https://www.duolingo.com/
-// @copyright  2014+
+// @name        Duolingo Long Time Session Userscript
+// @namespace   https://github.com/maxim5
+// @version     0.2
+// @description Makes the time session longer (5 minutes)
+// @match       https://www.duolingo.com/*
+// @copyright   2014+
 // ==/UserScript==
 
 var originalTimingModule = duo.TimingModule;
