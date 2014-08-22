@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name        Duolingo Time Session UX Userscript
+// @name        Duolingo Time-Session pause fix
 // @namespace   https://github.com/maxim5
 // @version     0.3
-// @description Stops the time session timer after the answer is done
+// @description Pauses the time-session timer after the answer is done
 // @match       https://www.duolingo.com/*
 // @copyright   2014+
 // ==/UserScript==
@@ -23,4 +23,4 @@ duo.TimingModule = duo.TimingModule.extend({
     }
 });
 
-console.log("[Duolingo Time Session UX patch applied]");
+console.log("[Duolingo Time-Session pause fix applied]");
