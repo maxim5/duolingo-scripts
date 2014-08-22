@@ -13,4 +13,4 @@ duo.TimingModule = duo.TimingModule.extend({
     }
 });
 
-console.log("[Duolingo stop the time]");
+console.log("[Duolingo stop the time applied]");
