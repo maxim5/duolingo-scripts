@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Duolingo Time Session UX Userscript
 // @namespace   https://github.com/maxim5
-// @version     0.2
+// @version     0.3
 // @description Stops the time session timer after the answer is done
 // @match       https://www.duolingo.com/*
 // @copyright   2014+
