@@ -11,7 +11,7 @@ var originalTimingModule = duo.TimingModule;
 
 duo.TimingModule = duo.TimingModule.extend({
     initialize: function(options) {
-        options.total_time = 300;
+        options.total_time = localStorage ? localStorage.getItem("duo.time-session.time") || 60 : 60;
         options.shown_max_time = 0;
         originalTimingModule.prototype.initialize.call(this, options);
     }
