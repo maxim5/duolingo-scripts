@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Duolingo easy language switch
 // @namespace   https://github.com/maxim5
-// @version     0.1
+// @version     0.2
 // @description Allows to switch between different language directions much easier
 // @match       https://www.duolingo.com/*
 // @copyright   2014+
@@ -12,15 +12,49 @@
     Util: local storage layer
  */
 
-var KEY = "duo.easy-lang-switch.language_directions";
+var KEY = "duo.lang-switch.language_directions";
 
 function store(language_direction) {
-    if (language_direction && localStorage) {
+    if (localStorage) {
         var current_direction = duo.user.get("ui_language") + "_" + duo.user.get("learning_language");
         var data = JSON.parse(localStorage[KEY] || "{}");
-        data[language_direction] = true;
+        if (language_direction) {
+            data[language_direction] = true;
+        }
         data[current_direction] = true;
         localStorage[KEY] = JSON.stringify(data);
+    }
+}
+
+function getIndex() {
+    return {
+        da: "Danish",
+        de: "German",
+        dn: "Dutch (Netherlands)",
+        en: "English",
+        es: "Spanish",
+        fr: "French",
+        ga: "Irish",
+        it: "Italian",
+        pt: "Portuguese",
+        ru: "Russian",
+        hu: "Hungarian",
+        ja: "Japanese",
+        cs: "Czech",
+        ro: "Romanian",
+        eo: "Esperanto",
+        tr: "Turkish",
+        pl: "Polish",
+        ko: "Korean",
+        uk: "Ukrainian",
+        th: "Thai",
+        sv: "Swedish",
+        hi: "Hindi",
+        vi: "Vietnamese",
+        id: "Indonesian",
+        zs: "Chinese",
+        ar: "Arabic",
+        el: "Greek"
     }
 }
 
@@ -30,6 +64,7 @@ function getFiltered() {
         var data = JSON.parse(localStorage[KEY] || "{}");
         var ui_language = duo.user.get("ui_language");
         var all_directions = Object.keys(data);
+        var index = getIndex();
         for (var i = 0; i < all_directions.length; ++i) {
             var direction = all_directions[i],
                 langs = direction.split("_");
@@ -37,7 +72,8 @@ function getFiltered() {
                 directions.push({
                     ui_lang: langs[0],
                     target_lang: langs[1],
-                    name: langs[1] + " from " + langs[0]
+                    ui_full: index[langs[0]],
+                    target_full: index[langs[1]]
                 });
             }
         }
@@ -52,9 +88,9 @@ function getFiltered() {
 var TEMPLATE =
     "<li data-switch='{{ui_lang}}_{{target_lang}}'>" +
         "<a href='javascript:;'>" +
-            "<span class='flag flag-svg-micro flag-{{ui_lang}}'></span>" +
-            "<span class='flag flag-svg-micro flag-{{target_lang}}' style='margin-left: 20px'></span>" +
-            "<span style='margin-left: 45px'>{{name}}</span>" +
+            "<span class='flag flag-svg-micro flag-{{ui_lang}}' style='left: 28px;'></span>" +
+            "<span class='flag flag-svg-micro flag-{{target_lang}}' style='left: 12px;'></span>" +
+            "<span style='margin-left: 30px'>{{target_full}} <span class='gray'>from {{ui_full}}</span></span>" +
         "</a>" +
     "</li>";
 
@@ -128,6 +164,9 @@ duo.SettingsView = duo.SettingsView.extend({
 // Update the instance in the router.
 // TODO: Currently does not patch the view instance if it is already presented.
 duo.settingsRouter.settings = new duo.SettingsView;
+
+// Just in case we changed the language differently, simply store the currently pair.
+store();
 
 
 console.log("[Duolingo easy language switch applied]");
