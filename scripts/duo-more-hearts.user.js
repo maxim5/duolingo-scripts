@@ -9,7 +9,7 @@
 
 duo.SessionView = duo.SessionView.extend({
     getNumHearts: function() {
-        return localStorage ? localStorage.getItem("duo.hearts") || 5 : 5;
+        return localStorage ? localStorage.getItem("duo.session.hearts") || 5 : 5;
     }
 });
 
