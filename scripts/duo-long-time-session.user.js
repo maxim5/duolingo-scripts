@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Duolingo long Time-Session
 // @namespace   https://github.com/maxim5
-// @version     0.3
+// @version     0.4
 // @description Makes the time-session longer (5 minutes)
 // @match       https://www.duolingo.com/*
 // @copyright   2014+

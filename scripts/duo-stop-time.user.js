@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Duolingo stop the time
 // @namespace   https://github.com/maxim5
-// @version     0.1
+// @version     0.2
 // @description Stops the time-session timer completely
 // @match       https://www.duolingo.com/*
 // @copyright   2014+

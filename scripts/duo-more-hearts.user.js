@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Duolingo more hearts
 // @namespace   https://github.com/maxim5
-// @version     0.1
+// @version     0.2
 // @description Provides more hearts for the leaning sessions
 // @match       https://www.duolingo.com/*
 // @copyright   2014+
