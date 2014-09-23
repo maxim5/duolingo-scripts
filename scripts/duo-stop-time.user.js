@@ -9,7 +9,8 @@
 
 duo.TimingModule = duo.TimingModule.extend({
     getSecondsLeft: function() {
-        return this.original_total_time / 1E3;
+        // For some reason original_total_time is 60 seconds.
+        return 30;
     }
 });
 
