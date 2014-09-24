@@ -1,13 +1,17 @@
 // ==UserScript==
 // @name        Duolingo shortcuts for special symbols
 // @namespace   https://github.com/maxim5
-// @version     0.3
+// @version     0.4
 // @description Provides shortcuts for special symbols
 // @match       https://www.duolingo.com/*
 // @copyright   2014+
 // ==/UserScript==
 
 var originalSessionView = duo.SessionView;
+
+/*
+    Util: make indices for the special chars.
+ */
 
 var KEY_INDEX = {
     es: {           // áéíóúüñ¿¡ ÁÉÍÓÚÜÑ¿¡
@@ -44,6 +48,17 @@ var KEY_INDEX = {
     }
 };
 
+var REVERSE_INDEX = {};
+$.each(KEY_INDEX, function(lang, index) {
+    var reverseIndex = {};
+    $.each(index, function(k, sequence) {
+        $.each(sequence, function(i, chr) {
+            reverseIndex[chr] = reverseIndex[chr] || sequence + k;      // note: the sequence includes raw char!
+        });
+    });
+    REVERSE_INDEX[lang] = reverseIndex;
+});
+
 // Stolen from http://stackoverflow.com/questions/2897155/get-cursor-position-in-characters-within-a-text-input-field
 $.fn.getCursorPosition = function() {
     var input = this.get(0);
@@ -60,6 +75,10 @@ $.fn.getCursorPosition = function() {
         return sel.text.length - selLen;
     }
 };
+
+/*
+    Patch the SessionView and TimedSessionView.
+ */
 
 duo.SessionView = duo.SessionView.extend({
     initialize: function(options) {
@@ -79,20 +98,23 @@ duo.SessionView = duo.SessionView.extend({
         var vdata = input.data("vkeyboard");
         var lang = vdata.language;
         var keyIndex = KEY_INDEX[lang];
+        var reverseIndex = REVERSE_INDEX[lang];
 
         function getNextChar(previous, current) {
             if (!previous || !current) {
                 return;
             }
-            var sequence = (current == "`") ? keyIndex[previous] : keyIndex[current];
-            if (!sequence) {
-                return;
-            }
             if (current == "`") {
-                return sequence[0];     // TODO: support next ` hits
+                var sequence = keyIndex[previous];
+                if (sequence) {
+                    return sequence[0];
+                }
+                sequence = reverseIndex[previous];
+                var idx = sequence ? sequence.indexOf(previous) : -1;
+                if (idx >= 0) {
+                    return sequence[(idx + 1) % sequence.length];
+                }
             }
-            var idx = sequence.indexOf(previous);
-            return previous == "\\" ? sequence[0] : idx >= 0 ? sequence[(idx + 1) % sequence.length] : null;
         }
 
         input.keypress(function(e) {
@@ -102,14 +124,12 @@ duo.SessionView = duo.SessionView.extend({
             var pressedChar = String.fromCharCode(e.which);
             var nextInSequence = getNextChar(charBeforeCursor, pressedChar);
 
-            if (nextInSequence) {
-                // For simplicity support all normal browsers and IE 9+
-                if (typeof this.selectionStart == "number" && typeof this.selectionEnd == "number") {
-                    var start = this.selectionStart;
-                    var end = this.selectionEnd;
-                    this.value = value.slice(0, start - 1) + nextInSequence + value.slice(end);
-                    this.selectionStart = this.selectionEnd = start;     // Move the caret
-                }
+            // For simplicity support all normal browsers and IE 9+
+            if (nextInSequence && typeof this.selectionStart == "number" && typeof this.selectionEnd == "number") {
+                var start = this.selectionStart;
+                var end = this.selectionEnd;
+                this.value = value.slice(0, start - 1) + nextInSequence + value.slice(end);
+                this.selectionStart = this.selectionEnd = start;     // Move the caret
                 return false;
             }
         });
