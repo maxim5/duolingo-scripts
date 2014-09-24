@@ -26,37 +26,35 @@ function store(language_direction) {
     }
 }
 
-function getIndex() {
-    return {
-        da: "Danish",
-        de: "German",
-        dn: "Dutch (Netherlands)",
-        en: "English",
-        es: "Spanish",
-        fr: "French",
-        ga: "Irish",
-        it: "Italian",
-        pt: "Portuguese",
-        ru: "Russian",
-        hu: "Hungarian",
-        ja: "Japanese",
-        cs: "Czech",
-        ro: "Romanian",
-        eo: "Esperanto",
-        tr: "Turkish",
-        pl: "Polish",
-        ko: "Korean",
-        uk: "Ukrainian",
-        th: "Thai",
-        sv: "Swedish",
-        hi: "Hindi",
-        vi: "Vietnamese",
-        id: "Indonesian",
-        zs: "Chinese",
-        ar: "Arabic",
-        el: "Greek"
-    }
-}
+var FULL_NAME_INDEX = {
+    da: "Danish",
+    de: "German",
+    dn: "Dutch (Netherlands)",
+    en: "English",
+    es: "Spanish",
+    fr: "French",
+    ga: "Irish",
+    it: "Italian",
+    pt: "Portuguese",
+    ru: "Russian",
+    hu: "Hungarian",
+    ja: "Japanese",
+    cs: "Czech",
+    ro: "Romanian",
+    eo: "Esperanto",
+    tr: "Turkish",
+    pl: "Polish",
+    ko: "Korean",
+    uk: "Ukrainian",
+    th: "Thai",
+    sv: "Swedish",
+    hi: "Hindi",
+    vi: "Vietnamese",
+    id: "Indonesian",
+    zs: "Chinese",
+    ar: "Arabic",
+    el: "Greek"
+};
 
 function getFiltered() {
     var directions = [];
@@ -64,7 +62,6 @@ function getFiltered() {
         var data = JSON.parse(localStorage[KEY] || "{}");
         var ui_language = duo.user.get("ui_language");
         var all_directions = Object.keys(data);
-        var index = getIndex();
         for (var i = 0; i < all_directions.length; ++i) {
             var direction = all_directions[i],
                 langs = direction.split("_");
@@ -72,8 +69,8 @@ function getFiltered() {
                 directions.push({
                     ui_lang: langs[0],
                     target_lang: langs[1],
-                    ui_full: index[langs[0]],
-                    target_full: index[langs[1]]
+                    ui_full: FULL_NAME_INDEX[langs[0]],
+                    target_full: FULL_NAME_INDEX[langs[1]]
                 });
             }
         }
