@@ -1,12 +1,13 @@
 // ==UserScript==
 // @name        Duolingo easy language switch
 // @namespace   https://github.com/maxim5
+// @author      maxim
 // @version     0.2
 // @description Allows to switch between different language directions much easier
 // @match       https://www.duolingo.com/*
+// @license     BSD
 // @copyright   2014+
 // ==/UserScript==
-
 
 /*
     Util: local storage layer

@@ -1,9 +1,11 @@
 // ==UserScript==
 // @name        Duolingo fixes
 // @namespace   https://github.com/maxim5
+// @author      maxim
 // @version     0.1
 // @description Various bug-fixes
 // @match       https://www.duolingo.com/*
+// @license     BSD
 // @copyright   2014+
 // ==/UserScript==
 

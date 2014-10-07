@@ -1,9 +1,11 @@
 // ==UserScript==
 // @name        Duolingo Time-Session pause fix
 // @namespace   https://github.com/maxim5
+// @author      maxim
 // @version     0.3
 // @description Pauses the time-session timer after the answer is done
 // @match       https://www.duolingo.com/*
+// @license     BSD
 // @copyright   2014+
 // ==/UserScript==
 

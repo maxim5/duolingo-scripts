@@ -1,9 +1,11 @@
 // ==UserScript==
 // @name        Duolingo shortcuts for special symbols
 // @namespace   https://github.com/maxim5
+// @author      maxim
 // @version     0.4
 // @description Provides shortcuts for special symbols
 // @match       https://www.duolingo.com/*
+// @license     BSD
 // @copyright   2014+
 // ==/UserScript==
 
